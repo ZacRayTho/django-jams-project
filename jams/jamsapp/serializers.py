@@ -12,15 +12,28 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
         model = Album
         fields = ['name', 'publish_date', 'cover_art']
 
-class SongSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Song
-        fields = ['name', 'duration', 'album', 'genres']
-
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Genre
         fields = ['name']
+
+class SongSerializer(serializers.HyperlinkedModelSerializer):
+    album = serializers.StringRelatedField()
+    artist = serializers.StringRelatedField()
+    genres = GenreSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Song
+        fields = ['name', 'duration', 'album', 'genres', 'artist']
+
+class SongEditSerializer(serializers.HyperlinkedModelSerializer):
+    album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all())
+    artist = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all(), many=True)
+    genres = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True)
+
+    class Meta:
+        model = Song
+        fields = ['name', 'duration', 'album', 'genres', 'artist']
 
 class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

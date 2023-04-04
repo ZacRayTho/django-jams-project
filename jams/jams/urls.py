@@ -23,10 +23,14 @@ router = routers.DefaultRouter()
 router.register(r'artists', views.ArtistViewSet)
 router.register(r'albums', views.AlbumViewSet)
 router.register(r'songs', views.SongViewSet)
+router.register(r'songsEdit', views.SongEditViewSet)
 router.register(r'genres', views.GenreViewSet)
 router.register(r'playlists', views.PlaylistViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('genre_list/', views.genre_list),
+    path('song_lookup/<int:song_id>', views.song_lookup)
 ]
+
