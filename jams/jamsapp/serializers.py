@@ -19,8 +19,8 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 
 class SongSerializer(serializers.HyperlinkedModelSerializer):
     album = serializers.StringRelatedField()
-    artist = serializers.StringRelatedField()
-    genres = GenreSerializer(many=True, read_only=True)
+    artist = serializers.StringRelatedField(many=True)
+    genres = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Song

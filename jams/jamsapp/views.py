@@ -12,7 +12,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
     serializer_class = AlbumSerializer
 # Create your views here.
 class SongViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Song.objects.all()
+    queryset = Song.objects.all().order_by('id')
     serializer_class = SongSerializer
 
 class SongEditViewSet(viewsets.ModelViewSet):

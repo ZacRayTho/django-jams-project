@@ -17,8 +17,8 @@ class Genre(models.Model):
         
 class Artist(models.Model):
     name = models.CharField(max_length=55)
-    bio = models.TextField(null=False)
-    image = models.URLField(null=False)
+    bio = models.TextField(null=False, default="")
+    image = models.URLField(null=False, default="")
 
 
     def __str__(self):
