@@ -15,9 +15,14 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
 class SongSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Song
-        fields = ['name', 'duration', 'album', 'genre']
+        fields = ['name', 'duration', 'album', 'genres']
 
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Genre
         fields = ['name']
+
+class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Playlist
+        fields = ['name', 'songs']
