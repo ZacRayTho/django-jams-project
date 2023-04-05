@@ -8,6 +8,12 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
         model = Artist
         fields = ['name', 'bio', 'image', 'song']
 
+class ArtistEditSerializer(serializers.HyperlinkedModelSerializer):
+    song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True)
+    class Meta:
+        model = Artist
+        fields = ['name', 'bio', 'image', 'song']
+
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
     song = serializers.StringRelatedField(many=True)
 

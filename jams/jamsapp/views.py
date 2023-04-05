@@ -7,6 +7,12 @@ class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
 
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return ArtistSerializer
+        else:
+            return ArtistEditSerializer
+
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
 
