@@ -3,14 +3,25 @@ from rest_framework import serializers
 from jamsapp.models import *
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
+    song = serializers.StringRelatedField(many=True)
     class Meta:
         model = Artist
-        fields = ['name', 'bio', 'image']
+        fields = ['name', 'bio', 'image', 'song']
 
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
+    song = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Album
-        fields = ['name', 'publish_date', 'cover_art']
+        fields = ['name', 'publish_date', 'cover_art', 'song']
+
+class AlbumEditSerializer(serializers.HyperlinkedModelSerializer):
+    song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True)
+
+    class Meta:
+        model = Album
+        fields = ['name', 'publish_date', 'cover_art', 'song']
+
 
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -36,6 +47,15 @@ class SongEditSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['name', 'duration', 'album', 'genres', 'artist']
 
 class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
+    songs = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Playlist
+        fields = ['name', 'songs']
+
+class PlaylistEditSerializer(serializers.HyperlinkedModelSerializer):
+    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True)
+
     class Meta:
         model = Playlist
         fields = ['name', 'songs']

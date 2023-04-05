@@ -27,9 +27,9 @@ class Artist(models.Model):
 class Song(models.Model):
     name = models.CharField(max_length=55)
     duration = models.IntegerField()
-    album = models.ForeignKey(Album, on_delete=models.PROTECT)
+    album = models.ForeignKey(Album, on_delete=models.PROTECT, related_name='song')
     genres = models.ManyToManyField(Genre)
-    artist = models.ManyToManyField(Artist)
+    artist = models.ManyToManyField(Artist, related_name='song')
 
     def __str__(self):
         return self.name

@@ -9,16 +9,21 @@ class ArtistViewSet(viewsets.ModelViewSet):
 
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
-    serializer_class = AlbumSerializer
-# Create your views here.
-class SongViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Song.objects.all().order_by('id')
-    serializer_class = SongSerializer
 
-class SongEditViewSet(viewsets.ModelViewSet):
-    queryset = Song.objects.all()
-    serializer_class = SongEditSerializer
-    http_method_names = ('post', 'put', 'patch', 'delete')
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return AlbumSerializer
+        else:
+            return AlbumEditSerializer
+# Create your views here.
+class SongViewSet(viewsets.ModelViewSet):
+    queryset = Song.objects.all().order_by('id')
+    
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve"]:
+            return SongSerializer
+        else:
+            return SongEditSerializer
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
@@ -26,7 +31,12 @@ class GenreViewSet(viewsets.ModelViewSet):
 
 class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all()
-    serializer_class = PlaylistSerializer
+    
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return PlaylistSerializer
+        else:
+            return PlaylistEditSerializer
 
 
 def genre_list(request):
